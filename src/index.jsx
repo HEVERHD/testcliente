@@ -15,10 +15,11 @@ root.render(
   <BrowserRouter>
   <Navbar />
 		<div className='container my-4'>
-      <switch>
-        <Route exact path='/' component={CompanyList} />
-        <Route path='/company/:id' component={CompanyForm} />
-      </switch>
+      <Routes>
+      <Route path='/' element={<CompanyList />} />
+      <Route path='/companyForm' element ={<CompanyForm />} />
+    
+      </Routes>
 		</div>
     </BrowserRouter>
 

@@ -1,80 +1,117 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+
+//conexion API Methods
+import * as CompanyServer from './CompanyServer';
+
+//import components
+// import {AiFillPhone} from 'react-icons/ai';
 
 const CompanyForm = () => {
+
+	const initialState = { nit: '789', name: '', phone: '', address: '' };
+	const [companies, setCompanies] = useState(initialState);
+	const handleInputChange = (e) => {
+		// console.log(e.target.value);
+		// console.log(e.target.name);
+		setCompanies({ ...companies, [e.target.name]: e.target.value });
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			let res;
+			res = await CompanyServer.registerCompany(companies);
+			const data = await res.json();
+			console.log(data);
+			setCompanies(initialState);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
-		<div className='row'>
-			<div className='col-sm12 col-md-6 col-lg-4 col-xl-3'>
-				<h1> Gestion the companys</h1>
-				<div className='card'>
-					<div className='card-body'>
-						<form>
-							<div className='form-group'>
-								<input
-									type='number'
-									id='numNit'
-									name='numNit'
-									className='form-control'
-									placeholder='Nit'
-									value='789'
-									minlength='10'
-									maxlength='10'
-									required
-								/>
-							</div>
-							<div className='form-group'>
-								<input
-									type='text'
-									id='txtName'
-									name='txtName'
-									className='form-control'
-									placeholder='Name'
-									max='50'
-									required
-								/>
-							</div>
-							<div className='form-group'>
-								<input
-									type='text'
-									id='txtDescription'
-									name='txtDescription'
-									className='form-control'
-									placeholder='Description'
-									required
-								/>
-							</div>
-							<div className='form-group'>
-								<input
-									type='text'
-									id='txtAddress'
-									name='txtAddress'
-									className='form-control'
-									placeholder='Address'
-									max='50'
-									required
-								/>
-							</div>
-							<div className='form-group'>
-								<input
-									type='number'
-									id='numPhone'
-									name='numPhone'
-									className='form-control'
-									placeholder='Phone'
-									minlength='10'
-									required
-								/>
-								<button
-									type='submit'
-									className='btn btn-success-block text-bg-dark'
-								>
-									{' '}
-									Create
-								</button>
-							</div>
-						</form>
-					</div>
+		<div className='col-m3 mx-auto'>
+			<h2 className='mb-3 text-center'> Creating Company </h2>
+			<form onSubmit={handleSubmit}>
+				<div className='mb-3'>
+					<label className='form-label'>Nit code</label>
+					<input
+						type='number'
+						name='nit'
+						value={companies.nit}
+						onChange={handleInputChange}
+						className='form-control'
+						maxLength='10'
+						minLength='9'
+						autoFocus
+						required
+						placeholder='78964512'
+					/>
 				</div>
-			</div>
+				<div className='mb-3'>
+					<label className='form-label'>Name</label>
+					<input
+						type='text'
+						name='name'
+						value={companies.name}
+						onChange={handleInputChange}
+						className='form-control'
+						maxLength='50'
+						autoFocus
+						required
+						placeholder='Company name'
+					/>
+				</div>
+				<div className='mb-3'>
+					<label className='form-label'>Address</label>
+					<input
+						type='text'
+						name='address'
+						value={companies.address}
+						onChange={handleInputChange}
+						className='form-control'
+						minLength='1'
+						maxLength='50'
+						autoFocus
+						required
+						placeholder='Av. Siempre Viva #123'
+					/>
+				</div>
+				<div className='mb-3'>
+					<label className='form-label'>Description company</label>
+					<input
+						type='text'
+						name='description'
+						value={companies.description}
+						onChange={handleInputChange}
+						className='form-control'
+						minLength='30'
+						maxLength='500'
+						autoFocus
+						required
+						placeholder='We are a company that sells ...'
+					/>
+				</div>
+				<div className='mb-3'>
+					<label className='form-label'> Phone</label>
+					<input
+						type='text'
+						name='phone'
+						value={companies.phone}
+						onChange={handleInputChange}
+						className='form-control'
+						minLength='9'
+						maxLength='10'
+						autoFocus
+						required
+						placeholder='Example: Av. Siempre Viva #123'
+					/>
+				</div>
+				<div className='d-grid gap-2'>
+					<button className='btn btn-primary'>Save</button>
+				</div>
+			</form>
 		</div>
 	);
 };

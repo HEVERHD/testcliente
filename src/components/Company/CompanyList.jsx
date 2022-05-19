@@ -10,10 +10,10 @@ const CompanyList = () => {
 
 	const ListCompanies = async () => {
 		try {
-			const res = await CompanyServer.ListCompanies();
-			const data = await res.json();
+			let response = await CompanyServer.registerCompany(companies);
+			const data = await response.json();
 			setCompanies(data);
-			console.log(data);
+			
 		} catch (error) {
 			console.log(error);
 		}
