@@ -11,7 +11,9 @@ export const ListCompanies = async () => {
 //Obtenemos una empresa en especifico
 
 export const getCompany = async (companyid) => {
-	return await fetch(`${API_URL}${companyid}`);
+	
+	return await fetch(`${API_URL}/${companyid}`);
+	
 };
 
 //Crear una empresa
@@ -28,6 +30,24 @@ export const registerCompany = async (newCompany) => {
 			address: String(newCompany.address).trim(),
 			description: String(newCompany.description).trim(),
 			phone: parseInt(newCompany.phone),
+		}),
+	});
+};
+
+// Actualizar una empresa
+
+export const updateCompany = async (companyId, updateCompany) => {
+	return await fetch(`${API_URL}/${companyId}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			nit: parseInt(updateCompany.nit),
+			name: String(updateCompany.name).trim(),
+			address: String(updateCompany.address).trim(),
+			description: String(updateCompany.description).trim(),
+			phone: parseInt(updateCompany.phone),
 		}),
 	});
 };

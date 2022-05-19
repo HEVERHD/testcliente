@@ -5,7 +5,7 @@ export const Navbar = () => {
 	return (
 		<nav className='navbar navbar-expand-lg bg-dark'>
 			<div className='container-fluid'>
-				<Link className='navbar-brand' to="/">
+				<Link className='navbar-brand text-white' to='/'>
 					Lite Thinking Company 
 				</Link>
 				<button
@@ -17,17 +17,17 @@ export const Navbar = () => {
 					aria-expanded='false'
 					aria-label='Toggle navigation'
 				>
-					<span className='navbar-toggler-icon'></span>
+					<span className='navbar-toggler-icon '></span>
 				</button>
 				<div className='collapse navbar-collapse' id='navbarNav'>
 					<ul className='navbar-nav'>
 						<li className='nav-item'>
-							<Link className='nav-link active' aria-current='page' to="/">
+							<Link className=' text-white nav-link active' aria-current='page' to="/">
 								Home
 							</Link>
 						</li>
 						<li className='nav-item'>
-							<Link className='nav-link' to='/companyForm'>
+							<Link className=' text-white nav-link' to='/companyForm'>
 								Add Company
 							</Link>
 						</li>

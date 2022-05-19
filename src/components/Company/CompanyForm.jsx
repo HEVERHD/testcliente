@@ -1,6 +1,5 @@
-import React, { useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 
 //conexion API Methods
 import * as CompanyServer from './CompanyServer';
@@ -11,7 +10,6 @@ import * as CompanyServer from './CompanyServer';
 const CompanyForm = () => {
 	const navigate = useNavigate();
 	const params = useParams();
-	console.log(params);
 	const initialState = { nit: '789', name: '', phone: '', address: '' };
 	const [companies, setCompanies] = useState(initialState);
 	const handleInputChange = (e) => {
@@ -23,15 +21,18 @@ const CompanyForm = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			let res;
+			if (!params.nit) {
+				let res;
 			res = await CompanyServer.registerCompany(companies);
 			const data = await res.json();
-			if(data === 'Company already exists'){
+			if (data === 'Company already exists') {
 				setCompanies(initialState);
 				alert('Company already exists');
-			}else{
-				navigate('/');
 			}
+			} else {
+				await CompanyServer.updateCompany(params.nit, companies);
+			}
+			navigate('/');
 		} catch (error) {
 			console.log(error);
 		}
@@ -41,35 +42,24 @@ const CompanyForm = () => {
 		try {
 			const res = await CompanyServer.getCompany(companyid);
 			const data = await res.json();
-			setCompanies(data);
-
+			console.log(data);
+			const { nit, name, phone, address, description } = data.companies;
+			setCompanies({ nit, name, phone, address, description });
 		} catch (error) {
 			console.log(error);
 		}
-	}
+			
+		
+	};
 
-	useEffect (() => {
-		if(params.nit){
+	useEffect(() => {
+		if (params.nit) {
 			getCompany(params.nit);
 		}
-	}, 
-	[params.nit]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	}, [params.nit]);
 
 	return (
+		// eslint-disable-next-line
 		<div className='col-m3 mx-auto'>
 			<h2 className='mb-3 text-center'> Creating Company </h2>
 			<form onSubmit={handleSubmit}>
@@ -148,7 +138,17 @@ const CompanyForm = () => {
 					/>
 				</div>
 				<div className='d-grid gap-2'>
-					<button className='btn btn-primary'>Save</button>
+					{
+						params.nit ? (
+							<button type='submit' className='btn btn-primary'>
+								Update
+								</button>
+						) : (
+							<button type='submit' className='btn btn-success'>
+								Create
+								</button>
+					)}
+					
 				</div>
 			</form>
 		</div>
