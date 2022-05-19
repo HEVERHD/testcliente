@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+//components are the building blocks of your application. They represent the smallest pieces of functionality that you can put together to build a real application.
+import CompanyItem from './CompanyItem';
+
 import * as CompanyServer from './CompanyServer';
 
 const CompanyList = () => {
@@ -21,9 +24,9 @@ const CompanyList = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className='row'>
 			{companies.map((company) => (
-				<h1>{company.name}</h1>
+				<CompanyItem key={company.nit} company={company} />
 			))}
 		</div>
 	);
