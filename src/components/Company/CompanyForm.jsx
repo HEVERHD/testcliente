@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useState,useEffect} from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 //conexion API Methods
@@ -9,7 +9,9 @@ import * as CompanyServer from './CompanyServer';
 // import {AiFillPhone} from 'react-icons/ai';
 
 const CompanyForm = () => {
-	const navigate = Navigate();
+	const navigate = useNavigate();
+	const params = useParams();
+	console.log(params);
 	const initialState = { nit: '789', name: '', phone: '', address: '' };
 	const [companies, setCompanies] = useState(initialState);
 	const handleInputChange = (e) => {
@@ -24,13 +26,48 @@ const CompanyForm = () => {
 			let res;
 			res = await CompanyServer.registerCompany(companies);
 			const data = await res.json();
-			if (data.status === 200) {
+			if(data === 'Company already exists'){
 				setCompanies(initialState);
-			} navigate.push('/companies');
+				alert('Company already exists');
+			}else{
+				navigate('/');
+			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
+
+	const getCompany = async (companyid) => {
+		try {
+			const res = await CompanyServer.getCompany(companyid);
+			const data = await res.json();
+			setCompanies(data);
+
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	useEffect (() => {
+		if(params.nit){
+			getCompany(params.nit);
+		}
+	}, 
+	[params.nit]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	return (
 		<div className='col-m3 mx-auto'>

@@ -12,17 +12,16 @@ import CompanyForm from './components/Company/CompanyForm';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-  <Navbar />
+	<BrowserRouter>
+		<Navbar />
 		<div className='container my-4'>
-      <Routes>
-      <Route path='/' element={<CompanyList />} />
-      <Route path='/companyForm' element ={<CompanyForm />} />
-    
-      </Routes>
+			<Routes>
+				<Route exact path='/' element={<CompanyList />} />
+				<Route path='/companyForm' element={<CompanyForm />} />
+				<Route path='/updateCompany/:nit' element={<CompanyForm />} />
+			</Routes>
 		</div>
-    </BrowserRouter>
-
+	</BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
