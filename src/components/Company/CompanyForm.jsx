@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 
 //conexion API Methods
@@ -8,7 +9,7 @@ import * as CompanyServer from './CompanyServer';
 // import {AiFillPhone} from 'react-icons/ai';
 
 const CompanyForm = () => {
-
+	const navigate = Navigate();
 	const initialState = { nit: '789', name: '', phone: '', address: '' };
 	const [companies, setCompanies] = useState(initialState);
 	const handleInputChange = (e) => {
@@ -23,8 +24,9 @@ const CompanyForm = () => {
 			let res;
 			res = await CompanyServer.registerCompany(companies);
 			const data = await res.json();
-			console.log(data);
-			setCompanies(initialState);
+			if (data.status === 200) {
+				setCompanies(initialState);
+			} navigate.push('/companies');
 		} catch (error) {
 			console.log(error);
 		}

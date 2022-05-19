@@ -10,10 +10,9 @@ const CompanyList = () => {
 
 	const ListCompanies = async () => {
 		try {
-			let response = await CompanyServer.registerCompany(companies);
-			const data = await response.json();
+			const res = await CompanyServer.ListCompanies();
+			const data = await res.json();
 			setCompanies(data);
-			
 		} catch (error) {
 			console.log(error);
 		}
@@ -26,7 +25,7 @@ const CompanyList = () => {
 	return (
 		<div className='row'>
 			{companies.map((company) => (
-				<CompanyItem key={company.nit} company={company} />
+				<CompanyItem key={company.nit} company={company} ListCompanies={ListCompanies} />
 			))}
 		</div>
 	);

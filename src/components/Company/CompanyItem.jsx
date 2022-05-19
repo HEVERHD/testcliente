@@ -1,6 +1,16 @@
 import React from "react";
 
-const CompanyItem=(props)=>{
+import * as CompanyServer from "./CompanyServer";
+
+const CompanyItem=(props, ListCompanies)=>{
+
+    const handleDelete = async (companyid)=>{
+        await CompanyServer.deleteCompany(companyid);
+        props.ListCompanies();
+    }
+
+
+
     return(
         <div className="col-md-4 mb-4">
             <div className="card card-body">
@@ -9,6 +19,8 @@ const CompanyItem=(props)=>{
                 <p className="card-text">Nit/cc : <strong>{props.company.nit}</strong></p>
                 <p className="card-text">Number phone : <strong>{props.company.phone}</strong></p>
                 <p className="card-text">About : <strong>{props.company.address}</strong></p>
+                <button className="btn btn-primary" onClick={()=>props.handleEdit(props.company)}>Edit</button>
+                <button onClick={()=> props.company.nit && handleDelete (props.company.nit)} className="btn btn-danger my-2" >Delete</button>
 
             </div>
         </div>
