@@ -1,6 +1,6 @@
-const API_URL = 'https://apidjango.onrender.com/companies';
-const CREATE_COMPANY = 'https://apidjango.onrender.com/companies/create';
-const DELETE_URL = 'https://apidjango.onrender.com/companies/delete/';
+const API_URL = 'http://127.0.0.1:8000/companies';
+const CREATE_COMPANY = 'http://127.0.0.1:8000/companies/create';
+const DELETE_URL = 'http://127.0.0.1:8000/companies/delete/';
 
 //lista de empresas
 
@@ -11,15 +11,13 @@ export const ListCompanies = async () => {
 //Obtenemos una empresa en especifico
 
 export const getCompany = async (companyid) => {
-	
 	return await fetch(`${API_URL}/${companyid}`);
-	
 };
 
 //Crear una empresa
 
 export const registerCompany = async (newCompany) => {
-	return await fetch(`${CREATE_COMPANY}${newCompany}`, {
+	return await fetch(`${CREATE_COMPANY}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -36,8 +34,8 @@ export const registerCompany = async (newCompany) => {
 
 // Actualizar una empresa
 
-export const updateCompany = async (companyId, updateCompany) => {
-	return await fetch(`${API_URL}/${companyId}`, {
+export const updateCompany = async (companyid, updateCompany) => {
+	return await fetch(`${API_URL}/edit/${companyid}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',

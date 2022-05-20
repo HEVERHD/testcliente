@@ -25,9 +25,8 @@ const CompanyForm = () => {
 				let res;
 			res = await CompanyServer.registerCompany(companies);
 			const data = await res.json();
-			if (data === 'Company already exists') {
+			if (data === '200') {
 				setCompanies(initialState);
-				alert('Company already exists');
 			}
 			} else {
 				await CompanyServer.updateCompany(params.nit, companies);
@@ -43,25 +42,23 @@ const CompanyForm = () => {
 			const res = await CompanyServer.getCompany(companyid);
 			const data = await res.json();
 			console.log(data);
-			const { nit, name, phone, address, description } = data.companies;
+			const { nit, name, phone, address, description } = data;
 			setCompanies({ nit, name, phone, address, description });
 		} catch (error) {
 			console.log(error);
 		}
-			
-		
 	};
 
 	useEffect(() => {
 		if (params.nit) {
 			getCompany(params.nit);
 		}
-	}, [params.nit]);
+	}, []);
 
 	return (
 		// eslint-disable-next-line
 		<div className='col-m3 mx-auto'>
-			<h2 className='mb-3 text-center'> Creating Company </h2>
+			<h2 className='mb-3 text-center'> Gestion Company </h2>
 			<form onSubmit={handleSubmit}>
 				<div className='mb-3'>
 					<label className='form-label'>Nit code</label>
@@ -76,6 +73,7 @@ const CompanyForm = () => {
 						autoFocus
 						required
 						placeholder='78964512'
+						readOnly={params.nit ? true : false}
 					/>
 				</div>
 				<div className='mb-3'>
