@@ -3,6 +3,11 @@ const API_URL = 'https://apidjango.onrender.com/companies';
 const CREATE_COMPANY = 'https://apidjango.onrender.com/companies/create';
 const DELETE_URL = 'https://apidjango.onrender.com/companies/delete/';
 
+//URL PARA LOCAL
+// const API_URL = 'http://127.0.0.1:8000/companies';
+// const CREATE_COMPANY = 'http://127.0.0.1:8000/companies/create';
+// const DELETE_URL = 'http://127.0.0.1:8000/companies/delete/';
+
 //lista de empresas
 
 export const ListCompanies = async () => {
