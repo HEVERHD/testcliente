@@ -58,7 +58,12 @@ const CompanyForm = () => {
 	return (
 		// eslint-disable-next-line
 		<div className='col-m3 mx-auto'>
-			<h2 className='mb-3 text-center'> Gestion Company </h2>
+		{params.nit ? (
+			<h1 className='mb-3 text-center'>Update Company</h1>
+		) : (
+			<h1 className='mb-3 text-center' color='#fff'> Register Company</h1>
+		)}
+			
 			<form onSubmit={handleSubmit}>
 				<div className='mb-3'>
 					<label className='form-label'>Nit code</label>
